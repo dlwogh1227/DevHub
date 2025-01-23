@@ -2,7 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jaeholee.devhub.mybatis.PostMapper">
-    <select id="test" resultType="java.lang.String">
-        SELECT now()
+    <insert id="insertPost" parameterType="com.jaeholee.devhub.domain.Post" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO Post (title)
+        VALUES (#{title});
+    </insert>
+
+    <insert id="insertAttachment" parameterType="com.jaeholee.devhub.domain.Attachment">
+        INSERT INTO Attachment (title, path, attachment_type, thumbnail, post_id)
+        VALUES (#{title}, #{path}, #{attachmentType}, #{thumbnail}, #{postId})
+    </insert>
+
+    <select id="selectAllPosts" resultMap="PostWithAttachmentsAndReplies">
+        SELECT p.id, p.title, p.created_at, p.updated_at,
+               a.id AS attachment_id, a.title AS attachment_title, a.path AS attachment_path, a.attachment_type AS attachment_type, a.thumbnail AS attachment_thumbnail,
+               r.id AS reply_id, r.text AS reply_text
+        FROM Post p
+                 LEFT JOIN Attachment a ON p.id = a.post_id
+                 LEFT JOIN Reply r ON p.id = r.post_id
     </select>
+
+    <resultMap id="PostWithAttachmentsAndReplies" type="com.jaeholee.devhub.domain.Post">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+
+        <collection property="attachments" ofType="com.jaeholee.devhub.domain.Attachment">
+            <id property="id" column="attachment_id"/>
+            <result property="title" column="attachment_title"/>
+            <result property="path" column="attachment_path"/>
+            <result property="attachmentType" column="attachment_type"/>
+            <result property="thumbnail" column="attachment_thumbnail"/>
+        </collection>
+
+        <collection property="reply" ofType="com.jaeholee.devhub.domain.Reply">
+            <id property="id" column="reply_id"/>
+            <result property="text" column="reply_text"/>
+        </collection>
+    </resultMap>
 </mapper>

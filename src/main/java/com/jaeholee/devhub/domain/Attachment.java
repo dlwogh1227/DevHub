@@ -13,6 +13,6 @@ public class Attachment {
     private String title;
     private String path;
     private AttachmentType attachmentType;
-    private String thumbnailPath;
     private String thumbnail;
+    private Long postId;
 }
