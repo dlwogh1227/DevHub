@@ -20,17 +20,17 @@ public class ThumbnailCreatorTests {
 
     @Test
     public void testCreateThumbnail() {
-        String imageFolderPath = "\\gallery\\image";
-        String videoFolderPath = "\\gallery\\video";
-        String imageThumbnailFolderPath = "\\gallery\\imageThumbnail";
-        String videoThumbnailFolderPath = "\\gallery\\videoThumbnail";
+        String imageFolderPath = "app/data/image";
+        String videoFolderPath = "app/data/video";
+        String imageThumbnailFolderPath = "app/data/imageThumbnail";
+        String videoThumbnailFolderPath = "app/data/videoThumbnail";
 
         File imageFolder = new File(imageFolderPath);
         if (imageFolder.exists() && imageFolder.isDirectory()) {
             File[] imageFiles = imageFolder.listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
-                    return name.endsWith(".jpg") || name.endsWith(".jpeg") || name.endsWith(".png") || name.endsWith(".JPG");
+                    return name.toLowerCase().endsWith(".jpg") || name.endsWith(".jpeg") || name.endsWith(".png");
                 }
             });
             if(imageFiles != null) {
@@ -54,7 +54,7 @@ public class ThumbnailCreatorTests {
             File[] videoFiles = videoFolder.listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
-                    return name.endsWith(".mp4") || name.endsWith(".avi") || name.endsWith(".mov");
+                    return name.toLowerCase().endsWith(".mp4") || name.endsWith(".avi") || name.endsWith(".mov");
                 }
             });
             if(videoFiles != null) {

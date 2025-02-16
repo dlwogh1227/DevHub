@@ -17,9 +17,16 @@
                a.id AS attachment_id, a.title AS attachment_title, a.path AS attachment_path, a.attachment_type AS attachment_type, a.thumbnail AS attachment_thumbnail,
                r.id AS reply_id, r.text AS reply_text
         FROM Post p
-                 LEFT JOIN Attachment a ON p.id = a.post_id
-                 LEFT JOIN Reply r ON p.id = r.post_id
+            LEFT JOIN Attachment a ON p.id = a.post_id
+            LEFT JOIN Reply r ON p.id = r.post_id
     </select>
+
+    <select id="selectAttachmentsByPostId" parameterType="java.lang.Long" resultMap="AttachmentResultMap">
+        SELECT *
+        FROM Attachment
+        WHERE post_id = #{id}
+    </select>
+
 
     <resultMap id="PostWithAttachmentsAndReplies" type="com.jaeholee.devhub.domain.Post">
         <id property="id" column="id"/>
@@ -40,4 +47,14 @@
             <result property="text" column="reply_text"/>
         </collection>
     </resultMap>
+
+    <resultMap id="AttachmentResultMap" type="com.jaeholee.devhub.domain.Attachment">
+        <id property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="path" column="path" />
+        <result property="attachmentType" column="attachment_type" />
+        <result property="thumbnail" column="thumbnail" />
+        <result property="postId" column="post_id" />
+    </resultMap>
+
 </mapper>

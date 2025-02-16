@@ -20,19 +20,19 @@ public class PostService {
 
     private final PostMapper postMapper;
 
-    String imageAbPath = "D:\\DevHub\\src\\main\\resources\\static\\gallery\\image";
-    String videoAbPath = "D:\\DevHub\\src\\main\\resources\\static\\gallery\\video";
-    String imageThumbnailFolderPath = "/gallery/imageThumbnail";
-    String videoThumbnailFolderPath = "/gallery/videoThumbnail";
-    String imagePath = "/gallery/image";
-    String videoPath = "/gallery/video";
+    String imagePath = "app/data/image";
+    String videoPath = "app/data/video";
 
     public List<Post> selectAllPosts(){
         return postMapper.selectAllPosts();
     }
 
-    public void initailizeDB(){
-        File imageFolder = new File(imageAbPath);
+    public List<Attachment> selectAttachmentsByPostId(long id){
+        return postMapper.selectAttachmentsByPostId(id);
+    }
+
+    public void initializeDB(){
+        File imageFolder = new File(imagePath);
         File[] imageFiles = imageFolder.listFiles();
         if(imageFiles != null) {
             for (File imageFile : imageFiles) {
@@ -51,15 +51,15 @@ public class PostService {
                 Attachment attachment = Attachment.builder()
                         .title(imageFile.getName())
                         .attachmentType(AttachmentType.IMAGE)
-                        .path(imagePath + "/" + imageFile.getName())
+                        .path("/image/" + imageFile.getName())
                         .postId(post.getId())
-                        .thumbnail(imageThumbnailFolderPath + "/" + thumbnailName)
+                        .thumbnail("/imageThumbnail/" + thumbnailName)
                         .build();
                 postMapper.insertAttachment(attachment);
             }
         }
 
-        File videoFolder = new File(videoAbPath);
+        File videoFolder = new File(videoPath);
         File[] videoFiles = videoFolder.listFiles();
         if(videoFiles != null) {
             for (File videoFile : videoFiles) {
@@ -78,9 +78,9 @@ public class PostService {
                 Attachment attachment = Attachment.builder()
                         .title(videoFile.getName())
                         .attachmentType(AttachmentType.VIDEO)
-                        .path(videoPath + "/" + videoFile.getName())
+                        .path("video/" + videoFile.getName())
                         .postId(post.getId())
-                        .thumbnail(videoThumbnailFolderPath + "/" + thumbnailName)
+                        .thumbnail("videoThumbnail/" + thumbnailName)
                         .build();
                 postMapper.insertAttachment(attachment);
             }

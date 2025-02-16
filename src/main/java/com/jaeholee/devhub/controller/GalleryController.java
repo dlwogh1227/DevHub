@@ -1,5 +1,6 @@
 package com.jaeholee.devhub.controller;
 
+import com.jaeholee.devhub.domain.Attachment;
 import com.jaeholee.devhub.domain.Post;
 import com.jaeholee.devhub.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,9 @@ public class GalleryController {
     }
 
     @GetMapping("/read")
-    public String read(Model model) {
-        return null;
+    public void read(long id ,Model model) {
+        List<Attachment> attachments = postService.selectAttachmentsByPostId(id);
+        log.info(attachments);
+        model.addAttribute("attachments", attachments);
     }
 }
