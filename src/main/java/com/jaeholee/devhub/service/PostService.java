@@ -23,6 +23,10 @@ public class PostService {
     String imagePath = "app/data/image";
     String videoPath = "app/data/video";
 
+    public String getSysDate() {
+        return postMapper.getSysDate();
+    }
+
     public List<Post> selectAllPosts(){
         return postMapper.selectAllPosts();
     }
@@ -86,4 +90,5 @@ public class PostService {
             }
         }
     }
+
 }

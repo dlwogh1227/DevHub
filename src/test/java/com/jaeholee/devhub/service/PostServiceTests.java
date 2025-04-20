@@ -20,4 +20,9 @@ public class PostServiceTests {
         postService.initializeDB();
     }
 
+    @Test
+    public void sysdateTest(){
+        System.out.println("테스트@@@@@@:     "+postService.getSysDate());
+    }
+
 }
