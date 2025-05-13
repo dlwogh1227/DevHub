@@ -1,0 +1,131 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1.html}">
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+  <link
+          rel="stylesheet"
+          as="style"
+          onload="this.rel='stylesheet'"
+          href="https://fonts.googleapis.com/css2?display=swap&family=Inter%3Awght%40400%3B500%3B700%3B900&family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+  />
+  <title>Galileo Design</title>
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style>
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px; /* Tailwind gap-4 */
+    }
+    .media-item {
+      border-radius: 12px; /* Tailwind rounded-xl */
+      overflow: hidden;
+      background: #fff;
+    }
+    @media (max-width: 640px) {
+      .grid-container {
+        grid-template-columns: 1fr; /* 작은 화면에서 1열 */
+      }
+    }
+  </style>
+</head>
+<body>
+<section class="w-full h-full" layout:fragment="content">
+  <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+    <div class="layout-container flex h-full grow flex-col">
+      <div class="px-4 sm:px-40 flex flex-1 justify-center py-5">
+        <div class="layout-content-container flex flex-col w-full flex-1">
+          <div class="grid-container p-4">
+            <!-- My First Video -->
+            <div class="media-item p-4 border border-gray-200">
+              <div class="flex items-stretch justify-between gap-4 rounded-xl">
+                <div class="flex flex-[2_2_0px] flex-col gap-4">
+                  <div class="flex flex-col gap-1">
+                    <p class="text-[#111418] text-base font-bold leading-tight">My First Video</p>
+                    <p class="text-[#637588] text-sm font-normal leading-normal">날짜</p>
+                    <p class="text-[#637588] text-sm font-normal leading-normal">작성자</p>
+                  </div>
+                  <button
+                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 flex-row-reverse bg-[#f0f2f4] text-[#111418] pr-2 gap-1 text-sm font-medium leading-normal w-fit"
+                  >
+                    <div class="text-[#111418]" data-icon="PencilSimple" data-size="18px" data-weight="regular">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
+                        <path
+                                d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l24-24L216,84.68Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <span class="truncate">Edit</span>
+                  </button>
+                </div>
+                <div
+                        class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
+                        style='background-image: url("https://cdn.usegalileo.ai/sdxl10/ae9736d5-8729-433f-b6a5-0c4789812bba.png");'
+                ></div>
+              </div>
+            </div>
+            <!-- My Second Video -->
+            <div class="media-item p-4 border border-gray-200">
+              <div class="flex items-stretch justify-between gap-4 rounded-xl">
+                <div class="flex flex-[2_2_0px] flex-col gap-4">
+                  <div class="flex flex-col gap-1">
+                    <p class="text-[#111418] text-base font-bold leading-tight">My Second Video</p>
+                    <p class="text-[#637588] text-sm font-normal leading-normal">날짜</p>
+                    <p class="text-[#637588] text-sm font-normal leading-normal">작성자</p>
+                  </div>
+                  <button
+                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 flex-row-reverse bg-[#f0f2f4] text-[#111418] pr-2 gap-1 text-sm font-medium leading-normal w-fit"
+                  >
+                    <div class="text-[#111418]" data-icon="PencilSimple" data-size="18px" data-weight="regular">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
+                        <path
+                                d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l24-24L216,84.68Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <span class="truncate">Edit</span>
+                  </button>
+                </div>
+                <div
+                        class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
+                        style='background-image: url("https://cdn.usegalileo.ai/replicate/d2d5a444-0d17-41b9-88c4-6efb9eb23d5b.png");'
+                ></div>
+              </div>
+            </div>
+            <!-- My Fifth Image -->
+            <div class="media-item p-4 border border-gray-200">
+              <div class="flex items-stretch justify-between gap-4 rounded-xl">
+                <div class="flex flex-[2_2_0px] flex-col gap-4">
+                  <div class="flex flex-col gap-1">
+                    <p class="text-[#111418] text-base font-bold leading-tight">My Fifth Image</p>
+                    <p class="text-[#637588] text-sm font-normal leading-normal">날짜</p>
+                    <p class="text-[#637588] text-sm font-normal leading-normal">작성자</p>
+                  </div>
+                  <button
+                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 flex-row-reverse bg-[#f0f2f4] text-[#111418] pr-2 gap-1 text-sm font-medium leading-normal w-fit"
+                  >
+                    <div class="text-[#111418]" data-icon="PencilSimple" data-size="18px" data-weight="regular">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
+                        <path
+                                d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l24-24L216,84.68Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <span class="truncate">Edit</span>
+                  </button>
+                </div>
+                <div
+                        class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
+                        style='background-image: url("https://cdn.usegalileo.ai/sdxl10/d2924c5f-c54f-4a4f-974c-79a1811cbc54.png");'
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

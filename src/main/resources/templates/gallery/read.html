@@ -1,0 +1,110 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1.html}">
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+  <link
+          rel="stylesheet"
+          as="style"
+          onload="this.rel='stylesheet'"
+          href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+  />
+
+  <title>Galileo Design</title>
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+<body>
+<section class="w-full h-full" layout:fragment="content">
+<div class="overflow-hidden relative flex size-full flex-col bg-white group/design-root overflow-x-hidden" style="font-family: Inter, 'Noto Sans', sans-serif; height: auto;">
+  <div class="layout-container flex h-full grow flex-col">
+    <div class="px-40 flex flex-1 justify-center pb-3">
+      <div class="layout-content-container flex flex-col w-[512px] max-w-[512px] pb-5 max-w-[960px] flex-1">
+        <h1 class="text-[#111418] tracking-light text-[32px] font-bold leading-tight px-4 text-left pb-3 pt-6">How to write a blog post that people will actually read</h1>
+        <div
+                class="relative flex items-center justify-center bg-[#111418] bg-cover bg-center aspect-video"
+                style='background-image: url("https://cdn.usegalileo.ai/sdxl10/7edb5471-f0e5-48fc-bd30-ed40ce2b25c5.png");'
+        >
+        </div>
+        <div class="flex flex-wrap gap-4 px-4 py-2 py-2 justify-between">
+          <div class="flex items-center justify-center gap-2 px-3 py-2">
+            <div class="text-[#637588]" data-icon="Heart" data-size="24px" data-weight="regular">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                <path
+                        d="M178,32c-20.65,0-38.73,8.88-50,23.89C116.73,40.88,98.65,32,78,32A62.07,62.07,0,0,0,16,94c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,220.66,240,164,240,94A62.07,62.07,0,0,0,178,32ZM128,206.8C109.74,196.16,32,147.69,32,94A46.06,46.06,0,0,1,78,48c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,147.61,146.24,196.15,128,206.8Z"
+                ></path>
+              </svg>
+            </div>
+            <p class="text-[#637588] text-[13px] font-bold leading-normal tracking-[0.015em]">0</p>
+          </div>
+        </div>
+        <h3 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">comments</h3>
+        <div class="flex w-full flex-row items-start justify-start gap-3 p-4">
+          <div
+                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 shrink-0"
+                  style='background-image: url("https://placehold.co/600x400");'
+          ></div>
+          <div class="flex h-full flex-1 flex-col items-start justify-start">
+            <div class="flex w-full flex-row items-start justify-start gap-x-3">
+              <p class="text-[#111418] text-sm font-bold leading-normal tracking-[0.015em]">Samantha</p>
+              <p class="text-[#637588] text-sm font-normal leading-normal">1 day ago</p>
+            </div>
+            <p class="text-[#111418] text-sm font-normal leading-normal">
+              Great video! I love your tips on how to structure blog posts. It's so important to keep the reader engaged and not just write a wall of text.
+            </p>
+            <div class="flex w-full flex-row items-center justify-start gap-9 pt-2">
+              <div class="flex items-center gap-2">
+                <div class="text-[#637588]" data-icon="ThumbsUp" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                            d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"
+                    ></path>
+                  </svg>
+                </div>
+                <p class="text-[#637588] text-sm font-normal leading-normal">0</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="text-[#637588]" data-icon="ThumbsDown" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                            d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"
+                    ></path>
+                  </svg>
+                </div>
+                <p class="text-[#637588] text-sm font-normal leading-normal">0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center px-4 py-3 gap-3 @container">
+          <div
+                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 shrink-0"
+                  style='background-image: url("https://placehold.co/600x400");'
+          ></div>
+          <label class="flex flex-col min-w-40 h-12 flex-1">
+            <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
+              <input
+                      placeholder="Add a public comment..."
+                      class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-full placeholder:text-[#637588] px-4 rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal"
+                      value=""
+              />
+              <div class="flex border-none bg-[#f0f2f4] items-center justify-center pr-4 rounded-r-xl border-l-0 !pr-2">
+                <div class="flex items-center gap-4 justify-end">
+                  <div class="flex items-center gap-1">
+                    <button class="flex items-center justify-center p-1.5">
+                      <span class="truncate border-l-2 border-l-gray-300 pl-2 font-bold" >Enter</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+</body>
+</html>

@@ -35,6 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-# 프로젝트 제외 경로
-/src/main/resources/templates/gallery/
