@@ -12,7 +12,6 @@ import java.io.FilenameFilter;
 
 @SpringBootTest
 @Log4j2
-@ContextConfiguration(classes = DevHubApplication.class)
 public class ThumbnailCreatorTests {
 
     @Autowired
@@ -20,10 +19,10 @@ public class ThumbnailCreatorTests {
 
     @Test
     public void testCreateThumbnail() {
-        String imageFolderPath = "app/data/image";
-        String videoFolderPath = "app/data/video";
-        String imageThumbnailFolderPath = "app/data/imageThumbnail";
-        String videoThumbnailFolderPath = "app/data/videoThumbnail";
+        String imageFolderPath = "C:\\Users\\KDT-25\\Desktop\\gallery\\image";
+        String videoFolderPath = "C:\\Users\\KDT-25\\Desktop\\gallery\\video";
+        String imageThumbnailFolderPath = "C:\\Users\\KDT-25\\Desktop\\gallery\\imageThumbnail";
+        String videoThumbnailFolderPath = "C:\\Users\\KDT-25\\Desktop\\gallery\\videoThumbnail";
 
         File imageFolder = new File(imageFolderPath);
         if (imageFolder.exists() && imageFolder.isDirectory()) {

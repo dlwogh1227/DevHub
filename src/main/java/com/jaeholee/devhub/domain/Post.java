@@ -1,6 +1,7 @@
 package com.jaeholee.devhub.domain;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,6 +15,7 @@ public class Post {
     private int id;
 
     @NotNull
+    @Size(min = 1, max = 20, message = "title must be between 1 and 20 character")
     private String title;
 
     @NotNull

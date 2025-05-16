@@ -33,7 +33,7 @@
             updated_at,
             heart,
             creator
-        FROM posts
+        FROM post
         WHERE id = #{id}
     </select>
 
@@ -45,7 +45,7 @@
             created_at,
             updated_at,
             creator
-        FROM replies
+        FROM reply
         WHERE post_id = #{id}
         ORDER BY created_at ASC
     </select>
@@ -67,7 +67,7 @@
     </select>
 
     <insert id="insertPost" parameterType="Post">
-        INSERT INTO posts (
+        INSERT INTO post (
             title,
             path,
             thumbnail_path,
