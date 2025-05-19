@@ -1,13 +1,11 @@
 package com.jaeholee.devhub.domain;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 public class Reply {
 
     private int post_id;

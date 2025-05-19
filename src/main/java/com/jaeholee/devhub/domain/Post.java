@@ -2,7 +2,6 @@ package com.jaeholee.devhub.domain;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -10,7 +9,6 @@ import java.util.List;
 
 
 @Data
-@Builder
 public class Post {
     private int id;
 
