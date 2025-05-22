@@ -3,6 +3,7 @@ package com.jaeholee.devhub.service;
 import com.jaeholee.devhub.domain.Post;
 import com.jaeholee.devhub.domain.Reply;
 import com.jaeholee.devhub.mybatis.PostMapper;
+import groovy.util.logging.Log4j2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class PostService {
 
     private final PostMapper postMapper;
