@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 @Data
 public class Reply {
 
+    private int id;
+
     private int post_id;
 
     @NotNull
@@ -19,4 +21,8 @@ public class Reply {
 
     @NotNull
     private String creator;
+
+    private int up;
+
+    private int down;
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 public class Post {
+
     private int id;
 
     @NotNull

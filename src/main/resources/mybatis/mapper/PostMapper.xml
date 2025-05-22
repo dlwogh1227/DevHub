@@ -40,11 +40,14 @@
     <!-- Reply 리스트 조회 -->
     <select id="getRepliesByPostId" resultType="Reply">
         SELECT
+            id,
             post_id,
             body,
             created_at,
             updated_at,
-            creator
+            creator,
+            up,
+            down
         FROM reply
         WHERE post_id = #{id}
         ORDER BY created_at ASC
@@ -83,4 +86,21 @@
                )
     </insert>
 
+    <insert id="insertReply" parameterType="Reply">
+        INSERT INTO Reply (
+            post_id,
+            body,
+            creator
+        )
+        VALUES (
+                    #{post_id},
+                    #{body},
+                    #{creator}
+               )
+    </insert>
+
+    <delete id="deleteReplyById" parameterType="int">
+        DELETE FROM Reply
+        WHERE id = #{id}
+    </delete>
 </mapper>

@@ -32,7 +32,7 @@
 </head>
 <body>
 <section class="w-full h-full" layout:fragment="content">
-  <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+  <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-visible" style='font-family: Inter, "Noto Sans", sans-serif;'>
     <div class="layout-container flex h-full grow flex-col">
       <div class="px-4 sm:px-40 flex flex-1 justify-center py-5">
         <div class="layout-content-container flex flex-col w-full flex-1">
@@ -67,7 +67,7 @@
                       </div>
                     </div>
 
-                    <p class="text-[#637588] text-sm font-normal leading-normal" th:text="${#temporals.format(post.getCreated_at(), 'yyyy-MM-dd')}"></p>
+                    <p class="text-[#637588] text-sm font-normal leading-normal" th:text="${#temporals.format(post.getCreated_at(), 'yyyy-MM-dd HH:mm')}"></p>
                     <p class="text-[#637588] text-sm font-normal leading-normal" th:text="${post.getCreator()}"></p>
                   </div>
                   <button

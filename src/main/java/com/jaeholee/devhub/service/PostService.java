@@ -1,6 +1,7 @@
 package com.jaeholee.devhub.service;
 
 import com.jaeholee.devhub.domain.Post;
+import com.jaeholee.devhub.domain.Reply;
 import com.jaeholee.devhub.mybatis.PostMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,17 @@ public class PostService {
 
     public void insertPost(Post post) {
         postMapper.insertPost(post);
+    }
+
+    public void insertReply(Reply reply) {
+        postMapper.insertReply(reply);
+    }
+
+    public void deleteReply(int id) {
+        postMapper.deleteReplyById(id);
+    }
+
+    public List<Reply> getRepliesByPostId(int post_id){
+        return postMapper.getRepliesByPostId(post_id);
     }
 }
