@@ -196,7 +196,7 @@
         alert("등록 성공!");
         postForm.reset();
         modalBackdrop.classList.add('hidden');
-        location.reload();
+        location.href = "/gallery/list";
       } catch (err) {
         console.error(err);
         alert("등록 중 오류가 발생했습니다.");
