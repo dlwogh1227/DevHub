@@ -17,13 +17,10 @@ public class Post {
     @Size(min = 1, max = 20, message = "title must be between 1 and 20 character")
     private String title;
 
-    @NotNull
     private String path;
 
-    @NotNull
     private String thumbnail_path;
 
-    @NotNull
     private String content_type;
 
     private LocalDateTime created_at;
@@ -32,7 +29,6 @@ public class Post {
 
     private int heart;
 
-    @NotNull
     private String creator;
 
     private List<Reply> replies;

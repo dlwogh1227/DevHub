@@ -19,7 +19,6 @@ public class Reply {
 
     private LocalDateTime updated_at;
 
-    @NotNull
     private String creator;
 
     private int up;

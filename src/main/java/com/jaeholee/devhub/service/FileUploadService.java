@@ -7,49 +7,33 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
 @Log4j2
 @RequiredArgsConstructor
 public class FileUploadService {
+    public String saveFile(MultipartFile file, String path) {
+        try {
+            String originalFilename = file.getOriginalFilename();
+            String extension = Objects.requireNonNull(originalFilename).substring(originalFilename.lastIndexOf("."));
+            String uid = UUID.randomUUID().toString();
+            String uniqueFileName = uid + extension;
 
-    private final ThumbnailService thumbnailService;
-
-    private final String path = "C:\\Users\\KDT-25\\Desktop\\gallery\\";
-
-    public String[] saveFile(MultipartFile file) throws Exception {
-        String originalFilename = file.getOriginalFilename();
-        String extension = "";
-        String uniqueFileName = "";
-        String[] result = new String[2];
-
-        String contentType = file.getContentType();
-        if (contentType != null){
+            File destinationFile = new File(path + uniqueFileName);
+            file.transferTo(destinationFile);
+            return uniqueFileName;
+        } catch (Exception e) {
+            log.error("파일 업로드 에러{}", String.valueOf(e));
             return null;
         }
-        extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-        if (contentType.startsWith("image/")){
-            String uid = UUID.randomUUID().toString();
-            uniqueFileName = uid + extension;
-            String image_folder = path + "image";
-            File destinationFile = new File(image_folder + uniqueFileName);
-            file.transferTo(destinationFile);
-            String imageThumb_folder = path + "imageThumbnail";
-            thumbnailService.createImageThumbnail(image_folder + uniqueFileName, imageThumb_folder + uid + "_thumbnail" + extension);
-            result[0] = image_folder + uniqueFileName;
-            result[1] = imageThumb_folder + uid + "_thumbnail" + extension;
-        } else if (contentType.startsWith("video/")){
-            String uid = UUID.randomUUID().toString();
-            uniqueFileName = uid + extension;
-            String video_folder = path + "video";
-            File destinationFile = new File(video_folder + uniqueFileName);
-            file.transferTo(destinationFile);
-            String videoThumb_folder = path + "videoThumbnail";
-            thumbnailService.createVideoThumbnail(video_folder + uniqueFileName, videoThumb_folder + uid + "_thumbnail" + extension);
-            result[0] = video_folder + uniqueFileName;
-            result[1] = videoThumb_folder + uid + "_thumbnail" + extension;
+    }
+
+    public void deleteFile(String fileName) throws IOException {
+        File file = new File(fileName);
+        if (!file.delete()){
+            throw new IOException("파일 삭제 중 오류 발생");
         }
-        return result;
     }
 }

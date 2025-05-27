@@ -23,7 +23,7 @@ public class ThumbnailService {
                 log.info("{} already exists", thumbnailPath);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
             log.error("이미지 썸네일 생성 실패");
         }
     }
@@ -39,7 +39,7 @@ public class ThumbnailService {
                 process.waitFor(1, TimeUnit.SECONDS);
             }
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            log.error(e);
             throw new RuntimeException("동영상 썸네일 생성 실패", e);
         }
     }
