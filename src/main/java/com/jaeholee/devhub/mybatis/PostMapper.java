@@ -15,6 +15,8 @@ public interface PostMapper {
 
     void insertPost(Post post);
 
+    void deletePostById(int id);
+
     void insertReply(Reply reply);
 
     void deleteReplyById(int id);

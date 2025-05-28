@@ -28,6 +28,10 @@ public class PostService {
         postMapper.insertPost(post);
     }
 
+    public void deletePostById(int id) {
+        postMapper.deletePostById(id);
+    }
+
     public void insertReply(Reply reply) {
         postMapper.insertReply(reply);
     }

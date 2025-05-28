@@ -103,4 +103,9 @@
         DELETE FROM Reply
         WHERE id = #{id}
     </delete>
+    
+    <delete id="deletePostById" parameterType="int">
+        DELETE FROM Post
+        WHERE id = #{id}
+    </delete>
 </mapper>

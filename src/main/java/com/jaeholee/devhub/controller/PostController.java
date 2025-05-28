@@ -2,12 +2,16 @@ package com.jaeholee.devhub.controller;
 
 import com.jaeholee.devhub.domain.Post;
 import com.jaeholee.devhub.domain.Reply;
+import com.jaeholee.devhub.domain.User;
+import com.jaeholee.devhub.security.CustomUserDetails;
 import com.jaeholee.devhub.service.FileUploadService;
 import com.jaeholee.devhub.service.PostService;
 import com.jaeholee.devhub.service.ThumbnailService;
+import com.jaeholee.devhub.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.*;
@@ -26,6 +31,7 @@ import java.util.*;
 public class PostController {
 
     private final PostService postService;
+    private final UserService userService;
     private final FileUploadService fileUploadService;
     private final ThumbnailService thumbnailService;
 
@@ -64,7 +70,7 @@ public class PostController {
     }
 
     @PostMapping("/upload_post")
-    public String uploadPost(MultipartFile file, String title) {
+    public String uploadPost(MultipartFile file, String title, @AuthenticationPrincipal CustomUserDetails user) {
         if (title == null || title.isEmpty()) {
             throw new IllegalArgumentException("title cannot be empty");
         }
@@ -72,19 +78,19 @@ public class PostController {
         Post post = new Post();
         post.setTitle(title);
         post.setContent_type(content_type);
-        post.setCreator("익명");
+        post.setCreator(user.getUsername());
         if (content_type.equals("IMAGE")){
-            String filename = fileUploadService.saveFile(file, content_path + "\\image\\");
+            String filename = fileUploadService.saveFile(file, content_path + "\\post_files\\image\\");
             String thumb_name = getThumbnailName(filename);
-            thumbnailService.createImageThumbnail(content_path + "\\image\\" + filename, content_path + "\\imageThumbnail\\" + thumb_name);
-            post.setPath("/image/" + filename);
-            post.setThumbnail_path("/imageThumbnail/" + thumb_name);
+            thumbnailService.createImageThumbnail(content_path + "\\post_files\\image\\" + filename, content_path + "\\post_files\\imageThumbnail\\" + thumb_name);
+            post.setPath("/post_files/image/" + filename);
+            post.setThumbnail_path("/post_files/imageThumbnail/" + thumb_name);
         } else if (content_type.equals("VIDEO")) {
-            String filename = fileUploadService.saveFile(file, content_path + "\\video\\");
+            String filename = fileUploadService.saveFile(file, content_path + "\\post_files\\video\\");
             String thumb_name = getThumbnailName(filename);
-            thumbnailService.createVideoThumbnail(content_path + "\\video\\" + filename, content_path + "\\videoThumbnail\\" + thumb_name);
-            post.setPath("/video/" + filename);
-            post.setThumbnail_path("/videoThumbnail/" + thumb_name);
+            thumbnailService.createVideoThumbnail(content_path + "\\post_files\\video\\" + filename, content_path + "\\post_files\\videoThumbnail\\" + thumb_name);
+            post.setPath("/post_files/video/" + filename);
+            post.setThumbnail_path("/post_files/videoThumbnail/" + thumb_name);
         }
         try{
             postService.insertPost(post);
@@ -98,6 +104,28 @@ public class PostController {
         }
 
         return "redirect:/gallery/list";
+    }
+
+    @PostMapping("/delete_post")
+    public String deletePost(int post_id, @AuthenticationPrincipal CustomUserDetails current_user, RedirectAttributes redirectAttributes) {
+
+        Post post = postService.getPostById(post_id);
+        User post_user = userService.findByUsername(post.getCreator());
+
+        if(current_user.getId() != post_user.getId()){
+            redirectAttributes.addFlashAttribute("error", "You are not allowed to delete this post");
+            return "redirect:/gallery/list";
+        }
+
+        try {
+            postService.deletePostById(post_id);
+            fileUploadService.deleteFile(content_path + changeSlash(post.getPath()));
+            fileUploadService.deleteFile(content_path + changeSlash(post.getThumbnail_path()));
+            return "redirect:/gallery/list";
+        } catch (Exception e){
+            log.error(e);
+            return "redirect:/gallery/list";
+        }
     }
 
     public String changeSlash(String path) {
