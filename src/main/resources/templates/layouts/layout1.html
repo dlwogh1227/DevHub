@@ -1,17 +1,14 @@
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
   <link
           rel="stylesheet"
           as="style"
           onload="this.rel='stylesheet'"
-          href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+          href="https://fonts.googleapis.com/css2?display=swap&family=Inter%3Awght%40400%3B500%3B700%3B900&family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
   />
-
   <title>Galileo Design</title>
   <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 </head>
 <body>
@@ -38,18 +35,34 @@
           <a class="text-[#111418] text-sm font-medium leading-normal" href="#">Podcasts</a>
           <a class="text-[#111418] text-sm font-medium leading-normal" href="#">Books</a>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2" th:classappend="${#authorization.expression('isAuthenticated()')} ? 'hidden' : ''">
           <button
+                  onclick="document.getElementById('signupModal').classList.remove('hidden')"
                   class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#1980e6] text-white text-sm font-bold leading-normal tracking-[0.015em]"
           >
             <span class="truncate">Sign up</span>
           </button>
           <button
+                  onclick="document.getElementById('loginModal').classList.remove('hidden')"
                   class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#f0f2f4] text-[#111418] text-sm font-bold leading-normal tracking-[0.015em]"
           >
             <span class="truncate">Log in</span>
           </button>
         </div>
+          <div class="flex gap-2" th:classappend="${#authorization.expression('isAuthenticated()')} ? '' : 'hidden'">
+            <div class="flex items-center justify-center w-full">
+              <span th:text="${#authentication.name + ' 님'}"
+                    class="text-[#111418] text-lg font-bold text-center">
+              </span>
+            </div>
+            <a th:href="@{/logout}">
+              <button
+                      class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#f0f2f4] text-[#111418] text-sm font-bold leading-normal tracking-[0.015em]"
+              >
+                <span class="truncate">Log out</span>
+              </button>
+            </a>
+          </div>
       </div>
     </header>
     <div class="px-40 flex flex-1 justify-center py-5 mt-10 overflow-auto">
@@ -58,7 +71,58 @@
       </main>
     </div>
   </div>
-</div>
 
+  <!-- 로그인 모달 -->
+  <div id="loginModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+      <h2 class="text-2xl font-bold mb-4">로그인</h2>
+      <form th:action="@{/login}" method="post" autocomplete="off">
+        <div class="mb-4">
+          <label for="username" class="block text-sm font-medium text-gray-700">사용자 이름</label>
+          <input type="text" id="username" name="username" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+        </div>
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-700">비밀번호</label>
+          <input type="password" id="password" name="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+        </div>
+        <div th:if="${param.error}" class="mb-4 text-red-600">
+          사용자 이름 또는 비밀번호가 잘못되었습니다.
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="document.getElementById('loginModal').classList.add('hidden')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md">취소</button>
+          <button type="submit" class="px-4 py-2 bg-[#1980e6] text-white rounded-md">로그인</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 회원가입 모달 -->
+  <div id="signupModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+      <h2 class="text-2xl font-bold mb-4">회원가입</h2>
+      <form th:action="@{/signup}" method="post" autocomplete="off">
+        <div class="mb-4">
+          <label for="signupUsername" class="block text-sm font-medium text-gray-700">사용자 이름</label>
+          <input type="text" id="signupUsername" name="username" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+        </div>
+        <div class="mb-4">
+          <label for="signupToken" class="block text-sm font-medium text-gray-700">토큰</label>
+          <input type="text" id="signupToken" name="token" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="초대 코드를 입력하세요" />
+        </div>
+        <div class="mb-4">
+          <label for="signupPassword" class="block text-sm font-medium text-gray-700">비밀번호</label>
+          <input type="password" id="signupPassword" name="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+        </div>
+        <div th:if="${param.signupError}" class="mb-4 text-red-600">
+          회원가입에 실패했습니다. 다시 시도해주세요.
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="document.getElementById('signupModal').classList.add('hidden')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md">취소</button>
+          <button type="submit" class="px-4 py-2 bg-[#1980e6] text-white rounded-md">회원가입</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 </body>
 </html>

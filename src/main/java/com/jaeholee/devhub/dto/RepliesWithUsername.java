@@ -1,18 +1,15 @@
-package com.jaeholee.devhub.domain;
+package com.jaeholee.devhub.dto;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class Reply {
-
+public class RepliesWithUsername {
     private int id;
 
     private int post_id;
 
-    @NotNull
     private String body;
 
     private LocalDateTime created_at;
@@ -24,4 +21,6 @@ public class Reply {
     private int up;
 
     private int down;
+
+    private String username;
 }

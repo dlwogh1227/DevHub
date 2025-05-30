@@ -2,6 +2,8 @@ package com.jaeholee.devhub.mybatis;
 
 import com.jaeholee.devhub.domain.Post;
 import com.jaeholee.devhub.domain.Reply;
+import com.jaeholee.devhub.dto.PostWithUsername;
+import com.jaeholee.devhub.dto.RepliesWithUsername;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,7 +13,7 @@ public interface PostMapper {
 
     Post getPostById(int id);
 
-    List<Post> getAllPosts();
+    List<PostWithUsername> getAllPosts();
 
     void insertPost(Post post);
 
@@ -21,5 +23,5 @@ public interface PostMapper {
 
     void deleteReplyById(int id);
 
-    List<Reply> getRepliesByPostId(int post_id);
+    List<RepliesWithUsername> getRepliesByPostId(int post_id);
 }

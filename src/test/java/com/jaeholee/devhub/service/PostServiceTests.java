@@ -1,6 +1,7 @@
 package com.jaeholee.devhub.service;
 
 import com.jaeholee.devhub.domain.Post;
+import com.jaeholee.devhub.dto.PostWithUsername;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class PostServiceTests {
 
     @Test
     public void test() {
-        List<Post> t = postService.getAllPosts();
-        for (Post p : t) {
+        List<PostWithUsername> t = postService.getAllPosts();
+        for (PostWithUsername p : t) {
             System.out.println(p);
         }
     }

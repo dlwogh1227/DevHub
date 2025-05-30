@@ -51,9 +51,9 @@
             ></div>
             <div class="flex h-full flex-1 flex-col items-start justify-start">
               <div class="flex w-full flex-row items-start justify-start gap-x-3">
-                <p class="text-[#111418] text-sm font-bold leading-normal tracking-[0.015em]" th:text="${reply.getCreator()}"></p>
+                <p class="text-[#111418] text-sm font-bold leading-normal tracking-[0.015em]" th:text="${reply.getUsername()}"></p>
                 <p class="text-[#637588] text-sm font-normal leading-normal" th:text="${#temporals.format(reply.getUpdated_at(), 'yyyy-MM-dd HH:mm')}"></p>
-                <form class="delete-reply-form inline-block m-0 p-0" action="/gallery/remove_reply" method="POST">
+                <form class="delete-reply-form inline-block m-0 p-0" action="/gallery/remove_reply" method="POST" autocomplete="off">
                   <!-- 숨겨진 값 -->
                   <input type="hidden" name="replyId" th:value="${reply.getId()}"/>
                   <input type="hidden" name="postId" th:value="${reply.getPost_id()}"/>
@@ -102,7 +102,7 @@
           ></div>
           <label class="flex flex-col min-w-40 h-12 flex-1">
             <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
-              <form id="insert-reply-form" th:action="@{/gallery/add_reply}" method="post" class="flex w-full flex-1 items-stretch rounded-xl h-full">
+              <form id="insert-reply-form" th:action="@{/gallery/add_reply}" autocomplete="off" method="post" class="flex w-full flex-1 items-stretch rounded-xl h-full">
                 <input
                         name="content"
                         placeholder="Add a public comment..."
@@ -143,7 +143,7 @@
             body: formData,
           });
 
-          if (!response.ok) throw new Error("댓글 등록 실패");
+          if (!response.ok) throw new Error("로그인이 필요합니다");
 
           const replies = await response.json(); // 서버에서 List<Reply> 반환
 
@@ -176,7 +176,7 @@
               body: formData
             });
 
-            if (!response.ok) throw new Error("댓글 삭제 실패");
+            if (!response.ok) throw new Error("에러 발생");
 
             const replies = await response.json();
 
@@ -214,9 +214,9 @@
              style="background-image: url('https://placehold.co/600x400');"></div>
         <div class="flex h-full flex-1 flex-col items-start justify-start">
           <div class="flex w-full flex-row items-start justify-start gap-x-3">
-            <p class="text-[#111418] text-sm font-bold leading-normal tracking-[0.015em]">${reply.creator}</p>
+            <p class="text-[#111418] text-sm font-bold leading-normal tracking-[0.015em]">${reply.username}</p>
             <p class="text-[#637588] text-sm font-normal leading-normal">${formatDateTime(reply.updated_at)}</p>
-            <form class="delete-reply-form inline-block m-0 p-0" method="POST">
+            <form class="delete-reply-form inline-block m-0 p-0" method="POST" autocomplete="off">
               <input type="hidden" name="replyId" value="${reply.id}" />
               <input type="hidden" name="postId" value="${reply.post_id}" />
               <button type="submit" style="all: unset; cursor: pointer;">

@@ -2,7 +2,8 @@ package com.jaeholee.devhub.controller;
 
 import com.jaeholee.devhub.domain.Post;
 import com.jaeholee.devhub.domain.Reply;
-import com.jaeholee.devhub.domain.User;
+import com.jaeholee.devhub.dto.PostWithUsername;
+import com.jaeholee.devhub.dto.RepliesWithUsername;
 import com.jaeholee.devhub.security.CustomUserDetails;
 import com.jaeholee.devhub.service.FileUploadService;
 import com.jaeholee.devhub.service.PostService;
@@ -40,7 +41,7 @@ public class PostController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        List<Post> list = postService.getAllPosts();
+        List<PostWithUsername> list = postService.getAllPosts();
         model.addAttribute("posts", list);
         return "gallery/list";
     }
@@ -53,18 +54,18 @@ public class PostController {
 
     @PostMapping("/add_reply")
     @ResponseBody
-    public List<Reply> addReply(int postId, String content) {
+    public List<RepliesWithUsername> addReply(int postId, String content, @AuthenticationPrincipal CustomUserDetails user) {
         Reply reply = new Reply();
         reply.setPost_id(postId);
         reply.setBody(content);
-        reply.setCreator("leejaeho");
+        reply.setUser_id(user.getId());
         postService.insertReply(reply);
         return postService.getRepliesByPostId(postId);
     }
 
     @PostMapping("/remove_reply")
     @ResponseBody
-    public List<Reply> removeReply(int replyId, int postId) {
+    public List<RepliesWithUsername> removeReply(int replyId, int postId) {
         postService.deleteReply(replyId);
         return postService.getRepliesByPostId(postId);
     }
@@ -78,7 +79,7 @@ public class PostController {
         Post post = new Post();
         post.setTitle(title);
         post.setContent_type(content_type);
-        post.setCreator(user.getUsername());
+        post.setUser_id(user.getId());
         if (content_type.equals("IMAGE")){
             String filename = fileUploadService.saveFile(file, content_path + "\\post_files\\image\\");
             String thumb_name = getThumbnailName(filename);
@@ -97,7 +98,7 @@ public class PostController {
         } catch (Exception e) {
             try{
                 fileUploadService.deleteFile(content_path + changeSlash(post.getPath()));
-                fileUploadService.deleteFile(content_path + changeSlash(post.getThumbnail_path()));// 수정 필요@@@
+                fileUploadService.deleteFile(content_path + changeSlash(post.getThumbnail_path()));
             } catch (IOException ie){
                 log.error(ie);
             }
@@ -110,9 +111,8 @@ public class PostController {
     public String deletePost(int post_id, @AuthenticationPrincipal CustomUserDetails current_user, RedirectAttributes redirectAttributes) {
 
         Post post = postService.getPostById(post_id);
-        User post_user = userService.findByUsername(post.getCreator());
 
-        if(current_user.getId() != post_user.getId()){
+        if(current_user.getId() != post.getUser_id()){
             redirectAttributes.addFlashAttribute("error", "You are not allowed to delete this post");
             return "redirect:/gallery/list";
         }

@@ -1,5 +1,6 @@
 package com.jaeholee.devhub.domain;
 
+import com.jaeholee.devhub.dto.RepliesWithUsername;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -29,7 +30,7 @@ public class Post {
 
     private int heart;
 
-    private String creator;
+    private int user_id;
 
-    private List<Reply> replies;
+    private List<RepliesWithUsername> replies;
 }

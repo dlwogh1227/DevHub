@@ -2,6 +2,8 @@ package com.jaeholee.devhub.service;
 
 import com.jaeholee.devhub.domain.Post;
 import com.jaeholee.devhub.domain.Reply;
+import com.jaeholee.devhub.dto.PostWithUsername;
+import com.jaeholee.devhub.dto.RepliesWithUsername;
 import com.jaeholee.devhub.mybatis.PostMapper;
 import groovy.util.logging.Log4j2;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,7 @@ public class PostService {
         return postMapper.getPostById(id);
     }
 
-    public List<Post> getAllPosts() {
+    public List<PostWithUsername> getAllPosts() {
         return postMapper.getAllPosts();
     }
 
@@ -40,7 +42,7 @@ public class PostService {
         postMapper.deleteReplyById(id);
     }
 
-    public List<Reply> getRepliesByPostId(int post_id){
+    public List<RepliesWithUsername> getRepliesByPostId(int post_id){
         return postMapper.getRepliesByPostId(post_id);
     }
 }
