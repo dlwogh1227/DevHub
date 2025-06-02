@@ -3,6 +3,8 @@ package com.jaeholee.devhub.controller;
 import com.jaeholee.devhub.dto.LoginDto;
 import com.jaeholee.devhub.dto.SignupDto;
 import com.jaeholee.devhub.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -10,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,13 +34,21 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-    public ResponseEntity<Map<String, String>> login(LoginDto loginDto) {
-        log.error("login loginDto: {}", loginDto);
+    public ResponseEntity<Map<String, String>> login(LoginDto loginDto, HttpServletRequest request) {
         try{
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            // SecurityContext 생성 및 설정
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+            context.setAuthentication(authentication);
+            SecurityContextHolder.setContext(context);
+
+            // 세션에 SecurityContext 저장
+            HttpSession session = request.getSession(true);
+            session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
+
             Map<String, String> map = new HashMap<>();
+            map.put("message", "로그인 성공");
             return ResponseEntity.ok(map);
         } catch (Exception e){
             log.error(e);

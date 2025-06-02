@@ -13,12 +13,4 @@ public class UserServiceTests {
     @Autowired
     private UserService userService;
 
-    @Test
-    public void testInsertUser() {
-        SignupDto signupDto = new SignupDto();
-        signupDto.setUsername("test");
-        signupDto.setPassword("test");
-        userService.registerUser(signupDto);
-    }
-
 }

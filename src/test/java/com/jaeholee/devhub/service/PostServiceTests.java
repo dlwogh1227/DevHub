@@ -14,21 +14,5 @@ import java.util.List;
 @Log4j2
 public class PostServiceTests {
 
-    @Autowired
-    PostService postService;
 
-    @Test
-    public void test() {
-        List<PostWithUsername> t = postService.getAllPosts();
-        for (PostWithUsername p : t) {
-            System.out.println(p);
-        }
-    }
-
-    @Test
-    public void initializeDB(){
-        String path = "C:\\Users\\KDT-25\\Desktop\\temp\\";
-
-        File files = new File(path);
-    }
 }

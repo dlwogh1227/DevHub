@@ -38,6 +38,7 @@ public class PostController {
 
     @Value("${upload.path}")
     private String content_path;
+    private final String SEPARATOR = java.io.File.separator;
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -81,15 +82,15 @@ public class PostController {
         post.setContent_type(content_type);
         post.setUser_id(user.getId());
         if (content_type.equals("IMAGE")){
-            String filename = fileUploadService.saveFile(file, content_path + "\\post_files\\image\\");
+            String filename = fileUploadService.saveFile(file, content_path + SEPARATOR +"post_files"+ SEPARATOR+ "image" + SEPARATOR);
             String thumb_name = getThumbnailName(filename);
-            thumbnailService.createImageThumbnail(content_path + "\\post_files\\image\\" + filename, content_path + "\\post_files\\imageThumbnail\\" + thumb_name);
+            thumbnailService.createImageThumbnail(content_path + SEPARATOR +"post_files"+ SEPARATOR +"image"+ SEPARATOR + filename, content_path + SEPARATOR +"post_files"+SEPARATOR+"imageThumbnail"+SEPARATOR+ thumb_name);
             post.setPath("/post_files/image/" + filename);
             post.setThumbnail_path("/post_files/imageThumbnail/" + thumb_name);
         } else if (content_type.equals("VIDEO")) {
-            String filename = fileUploadService.saveFile(file, content_path + "\\post_files\\video\\");
+            String filename = fileUploadService.saveFile(file, content_path + SEPARATOR+"post_files"+SEPARATOR+"video"+SEPARATOR);
             String thumb_name = getThumbnailName(filename);
-            thumbnailService.createVideoThumbnail(content_path + "\\post_files\\video\\" + filename, content_path + "\\post_files\\videoThumbnail\\" + thumb_name);
+            thumbnailService.createVideoThumbnail(content_path + SEPARATOR+"post_files"+SEPARATOR+"video"+SEPARATOR + filename, content_path + SEPARATOR+"post_files"+SEPARATOR+"videoThumbnail"+SEPARATOR + thumb_name);
             post.setPath("/post_files/video/" + filename);
             post.setThumbnail_path("/post_files/videoThumbnail/" + thumb_name);
         }
@@ -129,7 +130,13 @@ public class PostController {
     }
 
     public String changeSlash(String path) {
-        return path.replace('/', '\\');
+        String os = System.getProperty("os.name").toLowerCase();
+
+        if (os.contains("win")) {
+            return path.replace('/', '\\');
+        } else {
+            return path.replace('\\', '/');
+        }
     }
 
     public String getThumbnailName(String filename) {

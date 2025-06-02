@@ -1,0 +1,7 @@
+docker run -d ^
+  --name devhub-container ^
+  -v "C:\Users\KDT-25\Desktop\static":/app/data ^
+  -p 8080:8080 ^
+  devhub-image
+
+cmd에서 실행@@@

@@ -12,7 +12,7 @@ WORKDIR /app
 VOLUME ["/app/data"]
 
 # JAR 파일을 컨테이너로 복사 (여기서는 myapp.jar 파일을 예로 듬)
-COPY DevHub-0.0.1.jar /app/myapp.jar
+COPY build/libs/DevHub-0.0.1.jar /app/myapp.jar
 
 # 애플리케이션 실행
 ENTRYPOINT ["java", "-jar", "/app/myapp.jar"]
