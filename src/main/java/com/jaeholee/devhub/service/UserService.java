@@ -20,10 +20,10 @@ public class UserService {
         return userMapper.findByUsername(username);
     }
 
-    public void registerUser(SignupDto dto){
+    public void registerUser(String username, String password) {
         User user = new User();
-        user.setUsername(dto.getUsername());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
         user.setRole("USER"); // 기본 권한
         userMapper.insertUser(user);
     }

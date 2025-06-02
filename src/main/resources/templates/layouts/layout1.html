@@ -76,7 +76,7 @@
   <div id="loginModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
     <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
       <h2 class="text-2xl font-bold mb-4">로그인</h2>
-      <form th:action="@{/login}" method="post" autocomplete="off">
+      <form id="loginForm" th:action="@{/login}" method="post" autocomplete="off">
         <div class="mb-4">
           <label for="username" class="block text-sm font-medium text-gray-700">사용자 이름</label>
           <input type="text" id="username" name="username" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
@@ -85,7 +85,7 @@
           <label for="password" class="block text-sm font-medium text-gray-700">비밀번호</label>
           <input type="password" id="password" name="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
         </div>
-        <div th:if="${param.error}" class="mb-4 text-red-600">
+        <div id="login_msg" class="mb-4 text-red-600 invisible">
           사용자 이름 또는 비밀번호가 잘못되었습니다.
         </div>
         <div class="flex justify-end gap-2">
@@ -100,7 +100,7 @@
   <div id="signupModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
     <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
       <h2 class="text-2xl font-bold mb-4">회원가입</h2>
-      <form th:action="@{/signup}" method="post" autocomplete="off">
+      <form id="signupForm" th:action="@{/signup}" method="post" autocomplete="off">
         <div class="mb-4">
           <label for="signupUsername" class="block text-sm font-medium text-gray-700">사용자 이름</label>
           <input type="text" id="signupUsername" name="username" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
@@ -113,7 +113,7 @@
           <label for="signupPassword" class="block text-sm font-medium text-gray-700">비밀번호</label>
           <input type="password" id="signupPassword" name="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
         </div>
-        <div th:if="${param.signupError}" class="mb-4 text-red-600">
+        <div id="signup_msg" class="mb-4 text-red-600 invisible">
           회원가입에 실패했습니다. 다시 시도해주세요.
         </div>
         <div class="flex justify-end gap-2">
@@ -124,5 +124,55 @@
     </div>
   </div>
 </div>
+<script>
+  document.getElementById("loginForm").addEventListener("submit", async function (e) {
+    e.preventDefault(); // 기본 제출 방지
+
+    const formData = new FormData(this);
+
+    const response = await fetch(this.action, {
+      method: "POST",
+      body: new URLSearchParams(formData),
+      headers: {
+        "Accept": "application/json"
+      }
+    });
+
+    if (response.ok) {
+      alert("로그인 성공");
+      location.reload();  // 페이지 새로고침
+    } else {
+      const data = await response.json();
+      console.log(data)
+      const loginMsgDiv = document.getElementById("login_msg");
+      loginMsgDiv.textContent = data.message || "알 수 없는 오류가 발생했습니다.";
+      loginMsgDiv.classList.remove("invisible"); // 메시지 보이게
+    }
+  });
+
+  document.getElementById("signupForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    const response = await fetch(this.action, {
+      method: "POST",
+      body: new URLSearchParams(formData),
+      headers: {
+        "Accept": "application/json"
+      }
+    });
+
+    if (response.ok) {
+      alert("회원가입 성공");
+      location.reload();  // 페이지 새로고침
+    } else {
+      const data = await response.json();
+      const signupMsgDiv = document.getElementById("signup_msg");
+      signupMsgDiv.textContent = data.message || "알 수 없는 오류가 발생했습니다.";
+      signupMsgDiv.classList.remove("invisible"); // 메시지 보이게
+    }
+  });
+</script>
 </body>
 </html>

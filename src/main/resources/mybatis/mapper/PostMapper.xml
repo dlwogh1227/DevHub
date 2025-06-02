@@ -65,6 +65,7 @@
             p.created_at,
             p.updated_at,
             p.heart,
+            p.user_id,
             u.username
         FROM post p JOIN users u
         ON p.user_id = u.id

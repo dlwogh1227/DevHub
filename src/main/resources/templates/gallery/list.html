@@ -70,18 +70,22 @@
                     <p class="text-[#637588] text-sm font-normal leading-normal" th:text="${#temporals.format(post.getCreated_at(), 'yyyy-MM-dd HH:mm')}"></p>
                     <p class="text-[#637588] text-sm font-normal leading-normal" th:text="${post.getUsername()}"></p>
                   </div>
-                  <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 flex-row-reverse bg-[#f0f2f4] text-[#111418] pr-2 gap-1 text-sm font-medium leading-normal w-fit"
-                  >
-                    <div class="text-[#111418]" data-icon="PencilSimple" data-size="18px" data-weight="regular">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
-                        <path
-                                d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l24-24L216,84.68Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <span class="truncate">Edit</span>
-                  </button>
+                  <form action="/gallery/delete_post" class="inline-block m-0 p-0" method="POST" autocomplete="off">
+                    <input type="hidden" name="post_id" th:value="${post.getId()}" />
+                    <button
+                            th:style="${#authorization.expression('isAuthenticated()') and post.getUser_id() == #authentication.principal.id} ? '' : 'visibility:hidden;'"
+                            type="submit" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 flex-row-reverse bg-[#f0f2f4] text-[#111418] pr-2 gap-1 text-sm font-medium leading-normal w-fit"
+                    >
+                      <div class="text-[#111418]" data-icon="PencilSimple" data-size="18px" data-weight="regular">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
+                          <path
+                                  d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l24-24L216,84.68Z"
+                          ></path>
+                        </svg>
+                      </div>
+                      <span class="truncate">Delete</span>
+                    </button>
+                  </form>
                 </div>
                 <div
                         class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1 cursor-pointer"

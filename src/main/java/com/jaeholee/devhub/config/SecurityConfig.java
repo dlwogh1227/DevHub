@@ -9,6 +9,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -31,12 +32,8 @@ public class SecurityConfig {
                     .requestMatchers("/login", "/signup", "/post_files/**", "/gallery/list", "/gallery/read", "/error").permitAll()
                     .anyRequest().authenticated()
             )
-            .formLogin(form -> form
-                    .loginProcessingUrl("/login") // 모달에서 POST 요청 보낼 URL
-                    .defaultSuccessUrl("/gallery/list", false) // 로그인 성공 시 리다이렉트
-                    .failureUrl("/?error=true") // 로그인 실패 시 리다이렉트 (모달에서 에러 처리용)
-                    .permitAll() // 로그인 처리 URL에 대한 접근 허용
-            )
+            .securityMatcher("/**")
+            .httpBasic(AbstractHttpConfigurer::disable)
             .logout(logout -> logout
                     .logoutSuccessUrl("/gallery/list")
                     .permitAll()
