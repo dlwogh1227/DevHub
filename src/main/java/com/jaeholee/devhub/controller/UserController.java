@@ -18,7 +18,6 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.security.core.AuthenticationException;
 
 import java.util.HashMap;
 import java.util.Map;

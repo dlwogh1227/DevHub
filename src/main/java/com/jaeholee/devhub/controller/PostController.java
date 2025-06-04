@@ -9,6 +9,7 @@ import com.jaeholee.devhub.service.FileUploadService;
 import com.jaeholee.devhub.service.PostService;
 import com.jaeholee.devhub.service.ThumbnailService;
 import com.jaeholee.devhub.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -71,6 +72,7 @@ public class PostController {
         return postService.getRepliesByPostId(postId);
     }
 
+    @Operation(summary = "post 업로드", description = "업로드 후 전체 목록으로 리다이렉트")
     @PostMapping("/upload_post")
     public String uploadPost(MultipartFile file, String title, @AuthenticationPrincipal CustomUserDetails user) {
         if (title == null || title.isEmpty()) {
@@ -144,7 +146,7 @@ public class PostController {
         if (split.length > 2) {
             throw new IllegalArgumentException("filename must contain only one dot");
         }
-        return split[0] + "_thumbnail." + split[1];
+        return split[0] + "_thumbnail.jpg";
     }
 
     public String getFileType(MultipartFile file) {
